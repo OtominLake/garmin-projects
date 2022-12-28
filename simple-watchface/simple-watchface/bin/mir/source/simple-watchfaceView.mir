@@ -1,0 +1,154 @@
+[ @file = "C:\Users\adam-\source\repos\garmin-projects\simple-watchface\simple-watchface\source\simple-watchfaceView.mc"; @line = 1; ]
+import Toybox.Graphics;
+[ @file = "C:\Users\adam-\source\repos\garmin-projects\simple-watchface\simple-watchface\source\simple-watchfaceView.mc"; @line = 2; ]
+import Toybox.Lang;
+[ @file = "C:\Users\adam-\source\repos\garmin-projects\simple-watchface\simple-watchface\source\simple-watchfaceView.mc"; @line = 3; ]
+import Toybox.System;
+[ @file = "C:\Users\adam-\source\repos\garmin-projects\simple-watchface\simple-watchface\source\simple-watchfaceView.mc"; @line = 4; ]
+import Toybox.WatchUi;
+[ @file = "C:\Users\adam-\source\repos\garmin-projects\simple-watchface\simple-watchface\source\simple-watchfaceView.mc"; @line = 6; ]
+class SimpleWatchfaceView extends WatchUi.WatchFace{
+    [ @file = "C:\Users\adam-\source\repos\garmin-projects\simple-watchface\simple-watchface\source\simple-watchfaceView.mc"; @line = 6; ]
+    <init> {
+    }
+    [ @file = "C:\Users\adam-\source\repos\garmin-projects\simple-watchface\simple-watchface\source\simple-watchfaceView.mc"; @line = 6; ]
+    static
+    <init> {
+    }
+    [ @file = "C:\Users\adam-\source\repos\garmin-projects\simple-watchface\simple-watchface\source\simple-watchfaceView.mc"; @line = 8; ]
+    function initialize() as Void {
+C_Users_adam__source_repos_garmin_projects_simple_watchface_simple_watchface_source_simple_watchfaceView_mc_8_26_start:
+[ "C:\Users\adam-\source\repos\garmin-projects\simple-watchface\simple-watchface\source\simple-watchfaceView.mc" 9 8 ]
+        %tmp.2 = getv ? :WatchFace;
+        %tmp.3 = getv function %tmp.2 :initialize;
+        invoke %tmp.2 %tmp.3();
+C_Users_adam__source_repos_garmin_projects_simple_watchface_simple_watchface_source_simple_watchfaceView_mc_8_26_stop:
+    }
+    [ @file = "C:\Users\adam-\source\repos\garmin-projects\simple-watchface\simple-watchface\source\simple-watchfaceView.mc"; @line = 13; ]
+    function onLayout(dc as Dc) as Void {
+C_Users_adam__source_repos_garmin_projects_simple_watchface_simple_watchface_source_simple_watchfaceView_mc_13_40_start:
+[ "C:\Users\adam-\source\repos\garmin-projects\simple-watchface\simple-watchface\source\simple-watchfaceView.mc" 14 8 ]
+        %tmp.1 = self;
+        %tmp.2 = getv function %tmp.1 :setLayout;
+        %tmp.4 = getv ? :Rez;
+        %tmp.5 = getv %tmp.4 :Layouts;
+        %tmp.6 = getv function %tmp.5 :WatchFace;
+        %tmp.8 = lgetv %dc;
+        %tmp.9 = invoke %tmp.5 %tmp.6(%tmp.8);
+        invoke %tmp.1 %tmp.2(%tmp.9);
+C_Users_adam__source_repos_garmin_projects_simple_watchface_simple_watchface_source_simple_watchfaceView_mc_13_40_stop:
+    }
+    [ @file = "C:\Users\adam-\source\repos\garmin-projects\simple-watchface\simple-watchface\source\simple-watchfaceView.mc"; @line = 20; ]
+    function onShow() as Void {
+    }
+    [ @file = "C:\Users\adam-\source\repos\garmin-projects\simple-watchface\simple-watchface\source\simple-watchfaceView.mc"; @line = 24; ]
+    function onUpdate(dc as Dc) as Void {
+C_Users_adam__source_repos_garmin_projects_simple_watchface_simple_watchface_source_simple_watchfaceView_mc_24_40_start:
+[ "C:\Users\adam-\source\repos\garmin-projects\simple-watchface\simple-watchface\source\simple-watchfaceView.mc" 26 8 ]
+        [ "C_Users_adam__source_repos_garmin_projects_simple_watchface_simple_watchface_source_simple_watchfaceView_mc_24_40_start" "C_Users_adam__source_repos_garmin_projects_simple_watchface_simple_watchface_source_simple_watchfaceView_mc_24_40_stop" ]
+        %timeAndDate.1 = local;
+        %tmp.2 = getv ? :Time;
+        %tmp.3 = getv %tmp.2 :Gregorian;
+        %tmp.4 = getv function %tmp.3 :info;
+        %tmp.6 = getv ? :Time;
+        %tmp.7 = getv function %tmp.6 :now;
+        %tmp.8 = invoke %tmp.6 %tmp.7();
+        %tmp.10 = getv ? :Time;
+        %tmp.11 = getv %tmp.10 :FORMAT_SHORT;
+        %tmp.12 = invoke %tmp.3 %tmp.4(%tmp.8, %tmp.11);
+        lputv %timeAndDate.1 %tmp.12;
+[ "C:\Users\adam-\source\repos\garmin-projects\simple-watchface\simple-watchface\source\simple-watchfaceView.mc" 27 8 ]
+        [ "C_Users_adam__source_repos_garmin_projects_simple_watchface_simple_watchface_source_simple_watchfaceView_mc_24_40_start" "C_Users_adam__source_repos_garmin_projects_simple_watchface_simple_watchface_source_simple_watchfaceView_mc_24_40_stop" ]
+        %timeString.2 = local;
+        %tmp.13 = getm $.Toybox.Lang;
+        %tmp.14 = getv function %tmp.13 :format;
+        %tmp.15 = "$1$:$2$";
+        %tmp.16 = newa 2;
+        %tmp.17 = lgetv %timeAndDate.1;
+        %tmp.18 = getv %tmp.17 :hour;
+        %tmp.19 = dup %tmp.16;
+        %tmp.20 = aputv %tmp.19 0 %tmp.18;
+        %tmp.21 = lgetv %timeAndDate.1;
+        %tmp.22 = getv %tmp.21 :min;
+        %tmp.23 = getv function %tmp.22 :format;
+        %tmp.24 = "%02d";
+        %tmp.25 = invoke %tmp.22 %tmp.23(%tmp.24);
+        %tmp.26 = dup %tmp.20;
+        %tmp.27 = aputv %tmp.26 1 %tmp.25;
+        %tmp.28 = invoke %tmp.13 %tmp.14(%tmp.15, %tmp.27);
+        lputv %timeString.2 %tmp.28;
+[ "C:\Users\adam-\source\repos\garmin-projects\simple-watchface\simple-watchface\source\simple-watchfaceView.mc" 28 8 ]
+        [ "C_Users_adam__source_repos_garmin_projects_simple_watchface_simple_watchface_source_simple_watchfaceView_mc_24_40_start" "C_Users_adam__source_repos_garmin_projects_simple_watchface_simple_watchface_source_simple_watchfaceView_mc_24_40_stop" ]
+        %dateString.3 = local;
+        %tmp.29 = getm $.Toybox.Lang;
+        %tmp.30 = getv function %tmp.29 :format;
+        %tmp.31 = "$1$-$2$-$3$";
+        %tmp.32 = newa 3;
+        %tmp.33 = lgetv %timeAndDate.1;
+        %tmp.34 = getv %tmp.33 :year;
+        %tmp.35 = dup %tmp.32;
+        %tmp.36 = aputv %tmp.35 0 %tmp.34;
+        %tmp.37 = lgetv %timeAndDate.1;
+        %tmp.38 = getv %tmp.37 :month;
+        %tmp.39 = getv function %tmp.38 :format;
+        %tmp.40 = "%02d";
+        %tmp.41 = invoke %tmp.38 %tmp.39(%tmp.40);
+        %tmp.42 = dup %tmp.36;
+        %tmp.43 = aputv %tmp.42 1 %tmp.41;
+        %tmp.44 = lgetv %timeAndDate.1;
+        %tmp.45 = getv %tmp.44 :day;
+        %tmp.46 = getv function %tmp.45 :format;
+        %tmp.47 = "%02d";
+        %tmp.48 = invoke %tmp.45 %tmp.46(%tmp.47);
+        %tmp.49 = dup %tmp.43;
+        %tmp.50 = aputv %tmp.49 2 %tmp.48;
+        %tmp.51 = invoke %tmp.29 %tmp.30(%tmp.31, %tmp.50);
+        lputv %dateString.3 %tmp.51;
+[ "C:\Users\adam-\source\repos\garmin-projects\simple-watchface\simple-watchface\source\simple-watchfaceView.mc" 29 8 ]
+        [ "C_Users_adam__source_repos_garmin_projects_simple_watchface_simple_watchface_source_simple_watchfaceView_mc_24_40_start" "C_Users_adam__source_repos_garmin_projects_simple_watchface_simple_watchface_source_simple_watchfaceView_mc_24_40_stop" ]
+        %viewTime.4 = local;
+        %tmp.53 = getv ? :View;
+        %tmp.54 = getv function %tmp.53 :findDrawableById;
+        %tmp.55 = "TimeLabel";
+        %tmp.56 = invoke %tmp.53 %tmp.54(%tmp.55);
+        %tmp.57 = as %tmp.56 Text;
+        lputv %viewTime.4 %tmp.57;
+[ "C:\Users\adam-\source\repos\garmin-projects\simple-watchface\simple-watchface\source\simple-watchfaceView.mc" 30 8 ]
+        [ "C_Users_adam__source_repos_garmin_projects_simple_watchface_simple_watchface_source_simple_watchfaceView_mc_24_40_start" "C_Users_adam__source_repos_garmin_projects_simple_watchface_simple_watchface_source_simple_watchfaceView_mc_24_40_stop" ]
+        %viewDate.5 = local;
+        %tmp.59 = getv ? :View;
+        %tmp.60 = getv function %tmp.59 :findDrawableById;
+        %tmp.61 = "DateLabel";
+        %tmp.62 = invoke %tmp.59 %tmp.60(%tmp.61);
+        %tmp.63 = as %tmp.62 Text;
+        lputv %viewDate.5 %tmp.63;
+[ "C:\Users\adam-\source\repos\garmin-projects\simple-watchface\simple-watchface\source\simple-watchfaceView.mc" 31 8 ]
+        %tmp.64 = lgetv %viewTime.4;
+        %tmp.65 = getv function %tmp.64 :setText;
+        %tmp.67 = lgetv %timeString.2;
+        invoke %tmp.64 %tmp.65(%tmp.67);
+[ "C:\Users\adam-\source\repos\garmin-projects\simple-watchface\simple-watchface\source\simple-watchfaceView.mc" 32 8 ]
+        %tmp.68 = lgetv %viewDate.5;
+        %tmp.69 = getv function %tmp.68 :setText;
+        %tmp.71 = lgetv %dateString.3;
+        invoke %tmp.68 %tmp.69(%tmp.71);
+[ "C:\Users\adam-\source\repos\garmin-projects\simple-watchface\simple-watchface\source\simple-watchfaceView.mc" 35 8 ]
+        %tmp.73 = getv ? :View;
+        %tmp.74 = getv function %tmp.73 :onUpdate;
+        %tmp.76 = lgetv %dc;
+        invoke %tmp.73 %tmp.74(%tmp.76);
+C_Users_adam__source_repos_garmin_projects_simple_watchface_simple_watchface_source_simple_watchfaceView_mc_24_40_stop:
+    }
+    [ @file = "C:\Users\adam-\source\repos\garmin-projects\simple-watchface\simple-watchface\source\simple-watchfaceView.mc"; @line = 41; ]
+    function onHide() as Void {
+    }
+    [ @file = "C:\Users\adam-\source\repos\garmin-projects\simple-watchface\simple-watchface\source\simple-watchfaceView.mc"; @line = 45; ]
+    function onExitSleep() as Void {
+    }
+    [ @file = "C:\Users\adam-\source\repos\garmin-projects\simple-watchface\simple-watchface\source\simple-watchfaceView.mc"; @line = 49; ]
+    function onEnterSleep() as Void {
+    }
+}
+[ @file = "C:\Users\adam-\source\repos\garmin-projects\simple-watchface\simple-watchface\source\simple-watchfaceView.mc"; @line = 1; ]
+<init> {
+}

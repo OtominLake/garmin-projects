@@ -1,0 +1,5 @@
+<layout id="WatchFace">
+    <label text="Simple Watchface" x="center" y="25%" font="Graphics.FONT_TINY" justification="Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER" color="Graphics.COLOR_DK_GRAY" />
+    <label id="TimeLabel" x="center" y="50%" font="Graphics.FONT_NUMBER_THAI_HOT" justification="Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER" color="Graphics.COLOR_WHITE" />
+    <label id="DateLabel" x="center" y="75%" font="Graphics.FONT_GLANCE_NUMBER" justification="Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER" color="Graphics.COLOR_GREEN" />
+</layout>

@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"name": "simple-watchface",
+			"path": "simple-watchface/simple-watchface"
+		},
+		{
+			"name": "garmin-projects",
+			"path": "."
+		}
+	],
+	"settings": {}
+}
