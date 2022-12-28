@@ -1,0 +1,5 @@
+<layout id="WatchFace">
+    <!-- Bunny's moustache is rather poorly visible, so I am adding numbers for hour and minutes -->
+    <label id="lblHour" x="22%" y="32%" font="Graphics.FONT_NUMBER_MEDIUM" justification="Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER" color="0x5500ff" />
+    <label id="lblMinute" x="78%" y="32%" font="Graphics.FONT_NUMBER_MEDIUM" justification="Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER" color="0xff00ff" />
+</layout>

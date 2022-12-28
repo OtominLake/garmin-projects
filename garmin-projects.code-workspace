@@ -7,6 +7,10 @@
 		{
 			"name": "garmin-projects",
 			"path": "."
+		},
+		{
+			"name": "ImageBackground",
+			"path": "ImageBackground"
 		}
 	],
 	"settings": {}
