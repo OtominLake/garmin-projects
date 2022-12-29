@@ -11,6 +11,10 @@
 		{
 			"name": "ImageBackground",
 			"path": "ImageBackground"
+		},
+		{
+			"name": "CasioF91W_watchface",
+			"path": "CasioF91W_watchface"
 		}
 	],
 	"settings": {}
