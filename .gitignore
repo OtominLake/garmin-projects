@@ -1,2 +1,5 @@
 developer_key
+*.ttf
+lcd*.fnt
+lcd*.png
 bin/

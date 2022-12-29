@@ -1,3 +1,8 @@
 <layout id="WatchFace">
-    <label id="TimeLabel" x="center" y="center" font="Graphics.FONT_LARGE" justification="Graphics.TEXT_JUSTIFY_CENTER" color="Graphics.COLOR_BLUE" />
+    <label id="HoursLabel" x="115" y="131" font="@Fonts.LCDFontsLarge" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="Graphics.COLOR_BLACK" />
+    <label id="SeparatorLabel" x="112" y="131" font="@Fonts.LCDFontsLarge" justification="Graphics.TEXT_JUSTIFY_LEFT" color="Graphics.COLOR_BLACK" text=":"/>
+    <label id="MinutesLabel" x="130" y="131" font="@Fonts.LCDFontsLarge" justification="Graphics.TEXT_JUSTIFY_LEFT" color="Graphics.COLOR_BLACK" />
+    <label id="SecondsLabel" x="185" y="147" font="@Fonts.LCDFontsMedium" justification="Graphics.TEXT_JUSTIFY_LEFT" color="Graphics.COLOR_BLACK" />
+    <label id="MonthLabel" x="217" y="105" font="@Fonts.LCDFontsSmall" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="Graphics.COLOR_BLACK" />
+    <label id="DayLabel" x="112" y="105" font="@Fonts.LCDFontsSmall" justification="Graphics.TEXT_JUSTIFY_LEFT" color="Graphics.COLOR_BLACK" />
 </layout>
