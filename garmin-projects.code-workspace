@@ -15,6 +15,10 @@
 		{
 			"name": "CasioF91W_watchface",
 			"path": "CasioF91W_watchface"
+		},
+		{
+			"name": "BigLCD_watchface",
+			"path": "BigLCD_watchface"
 		}
 	],
 	"settings": {}
