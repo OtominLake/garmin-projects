@@ -1,0 +1,10 @@
+Fonts are not added to the project due to licence restrictions. You need to provide own fonts:
+lcd32.fnt
+lcd32.png
+lcd40.fnt
+lcd40.png
+lcd60.fnt
+lcd60.png
+
+BMFont may be used to generate .fnt and .png files from any fonts http://www.angelcode.com/products/bmfont/ 
+Set font size 32, 40, and 60 to generate each font. Select PNG output format. Place generated fonts in this directory.

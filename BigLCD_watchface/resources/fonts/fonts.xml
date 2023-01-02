@@ -1,0 +1,4 @@
+<fonts>
+    <font id="LCDFontsLarge" filename="lcd140.fnt" />
+    <font id="LCDFontsSmall" filename="lcd40.fnt"/>
+</fonts>

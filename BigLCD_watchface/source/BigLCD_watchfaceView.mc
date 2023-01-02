@@ -4,6 +4,7 @@ import Toybox.System;
 import Toybox.WatchUi;
 
 class BigLCD_watchfaceView extends WatchUi.WatchFace {
+    var viewHour, viewMinute, viewTemp, viewDate;
 
     function initialize() {
         WatchFace.initialize();
@@ -12,6 +13,10 @@ class BigLCD_watchfaceView extends WatchUi.WatchFace {
     // Load your resources here
     function onLayout(dc as Dc) as Void {
         setLayout(Rez.Layouts.WatchFace(dc));
+        viewHour = View.findDrawableById("HoursLabel") as Text;
+        viewMinute = View.findDrawableById("MinutesLabel") as Text;
+        viewTemp = View.findDrawableById("TempLabel") as Text;
+        viewDate = View.findDrawableById("DateLabel") as Text;
     }
 
     // Called when this View is brought to the foreground. Restore
@@ -22,11 +27,20 @@ class BigLCD_watchfaceView extends WatchUi.WatchFace {
 
     // Update the view
     function onUpdate(dc as Dc) as Void {
-        // Get and show the current time
-        var clockTime = System.getClockTime();
-        var timeString = Lang.format("$1$:$2$", [clockTime.hour, clockTime.min.format("%02d")]);
-        var view = View.findDrawableById("TimeLabel") as Text;
-        view.setText(timeString);
+        // Fill the layout with current data
+        var timeAndDate = Time.Gregorian.info(Time.now(), Time.FORMAT_SHORT);
+        viewHour.setText(timeAndDate.hour.format("%d"));
+        viewMinute.setText(timeAndDate.min.format("%02d"));
+        viewDate.setText(timeAndDate.year.format("%d") + "-" + timeAndDate.month.format("%0d") + "-" + timeAndDate.day.format("%02d"));
+
+        // Weather
+        var cond = Weather.getCurrentConditions();
+        if (cond != null) {
+            viewTemp.setText(cond.temperature.format("%d") + "C");
+        } else
+        {
+            viewTemp.setText("-");
+        }
 
         // Call the parent onUpdate function to redraw the layout
         View.onUpdate(dc);
