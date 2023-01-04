@@ -4,5 +4,5 @@
     <label id="HoursLabel" x="47%" y="center" font="@Fonts.LCDFontsLarge" justification="Graphics.TEXT_JUSTIFY_RIGHT" color="Graphics.COLOR_BLACK" />
     <label id="SeparatorLabel" x="40%" y="center" font="@Fonts.LCDFontsLarge" justification="Graphics.TEXT_JUSTIFY_LEFT" color="Graphics.COLOR_BLACK" text=":"/>
     <label id="MinutesLabel" x="53%" y="center" font="@Fonts.LCDFontsLarge" justification="Graphics.TEXT_JUSTIFY_LEFT" color="Graphics.COLOR_BLACK" />
-    <label id="DateLabel" x="center" y="80%" font="@Fonts.LCDFontsSmall" justification="Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER" color="Graphics.COLOR_DK_GRAY" />
+    <label id="DateLabel" x="center" y="75%" font="@Fonts.LCDFontsSmall" justification="Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER" color="Graphics.COLOR_DK_GRAY" />
 </layout>
