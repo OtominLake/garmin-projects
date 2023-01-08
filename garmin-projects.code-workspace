@@ -19,6 +19,10 @@
 		{
 			"name": "BigLCD_watchface",
 			"path": "BigLCD_watchface"
+		},
+		{
+			"name": "BestTemp",
+			"path": "BestTemp"
 		}
 	],
 	"settings": {}
