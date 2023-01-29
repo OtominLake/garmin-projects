@@ -29,10 +29,11 @@ class FullMinuteTrigger {
 }
 
 class BigLCD_watchfaceView extends WatchUi.WatchFace {
-    var viewHour, viewMinute, viewTemp, viewDate;
+    var viewHour, viewMinute, viewTemp, viewSteps, viewDate;
     var width, height;
     var timeTrigger, fullUpdateTrigger;
     var batteryLevel, batteryColor;
+    var steps = 0;
 
 
     function initialize() {
@@ -55,6 +56,7 @@ class BigLCD_watchfaceView extends WatchUi.WatchFace {
         viewHour = View.findDrawableById("HoursLabel") as Text;
         viewMinute = View.findDrawableById("MinutesLabel") as Text;
         viewTemp = View.findDrawableById("TempLabel") as Text;
+        viewSteps = View.findDrawableById("StepsLabel") as Text;
         viewDate = View.findDrawableById("DateLabel") as Text;
     }
 
@@ -85,6 +87,10 @@ class BigLCD_watchfaceView extends WatchUi.WatchFace {
             viewTemp.setText("-");
         }
 
+        // Steps
+        steps = ActivityMonitor.getInfo().steps;
+        viewSteps.setText(steps.toString());
+
         // Call the parent onUpdate function to redraw the layout
         View.onUpdate(dc);
 
@@ -102,11 +108,9 @@ class BigLCD_watchfaceView extends WatchUi.WatchFace {
             }
         }
      
-        dc.setColor(0x555555, Graphics.COLOR_TRANSPARENT);
-        dc.setPenWidth(3);
-        dc.drawRectangle(width * 0.3, height * 0.85, width * 0.4, height * 0.06);
-        dc.setColor(batteryColor, Graphics.COLOR_TRANSPARENT);
-        dc.fillRectangle(width * 0.3 + 1, height * 0.85 + 1, width * 0.4 * batteryLevel / 100 - 2, height * 0.06 - 2);
+        // Elements drawn individually, that are not in layout
+        drawBatteryLevel(dc);
+        drawUnreadNotifications(dc);
     }
 
     // Update time
@@ -117,15 +121,38 @@ class BigLCD_watchfaceView extends WatchUi.WatchFace {
         viewMinute.setText(timeAndDate.min.format("%02d"));
         viewDate.setText(timeAndDate.year.format("%d") + "-" + timeAndDate.month.format("%0d") + "-" + timeAndDate.day.format("%02d"));
 
+        // Steps
+        steps = ActivityMonitor.getInfo().steps;
+        viewSteps.setText(steps.toString());
+
         // Call the parent onUpdate function to redraw the layout
         View.onUpdate(dc);
 
-        // Draw battery level
+        // Elements drawn individually, that are not in layout
+        drawBatteryLevel(dc);
+        drawUnreadNotifications(dc);
+    }
+
+    // Draw battery level. Use batteryLevel and batteryColor object variables
+    function drawBatteryLevel(dc as Dc) {
         dc.setColor(0x555555, Graphics.COLOR_TRANSPARENT);
         dc.setPenWidth(3);
         dc.drawRectangle(width * 0.3, height * 0.85, width * 0.4, height * 0.06);
         dc.setColor(batteryColor, Graphics.COLOR_TRANSPARENT);
         dc.fillRectangle(width * 0.3 + 1, height * 0.85 + 1, width * 0.4 * batteryLevel / 100 - 2, height * 0.06 - 2);
+    }
+
+    // Check for unread notifications and draw icon
+    function drawUnreadNotifications(dc as Dc) {
+        var deviceSettings = System.getDeviceSettings();
+        if (deviceSettings.notificationCount > 0) {
+            // Draw an envelope
+            dc.setColor(0x55aaff, Graphics.COLOR_TRANSPARENT);
+            dc.setPenWidth(2);
+            dc.drawRectangle(width * 0.45, height * 0.07, width * 0.10, height * 0.05);
+            dc.drawLine(width * 0.45, height * 0.07, width * 0.50, height * 0.10);
+            dc.drawLine(width * 0.50, height * 0.10, width * 0.55, height * 0.07);
+        }
     }
 
     // Called when this View is removed from the screen. Save the
