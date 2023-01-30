@@ -1,7 +1,10 @@
 import Toybox.Graphics;
 import Toybox.Lang;
+import Toybox.SensorHistory;
 import Toybox.System;
 import Toybox.WatchUi;
+
+const ENERGY_HEARTS_NUM = 5;
 
 class FullMinuteTrigger {
     var lastMinute = -1; // -1 means uninitialized - first call to trigger will return true
@@ -29,11 +32,12 @@ class FullMinuteTrigger {
 }
 
 class BigLCD_watchfaceView extends WatchUi.WatchFace {
-    var viewHour, viewMinute, viewTemp, viewSteps, viewDate;
+    var viewHour, viewMinute, viewTemp, viewAuxData, viewDate;
     var width, height;
     var timeTrigger, fullUpdateTrigger;
     var batteryLevel, batteryColor;
-    var steps = 0;
+    var steps = 0, energy = 100;
+    var heartEmpty, heartHalf, heartFull;
 
 
     function initialize() {
@@ -56,8 +60,11 @@ class BigLCD_watchfaceView extends WatchUi.WatchFace {
         viewHour = View.findDrawableById("HoursLabel") as Text;
         viewMinute = View.findDrawableById("MinutesLabel") as Text;
         viewTemp = View.findDrawableById("TempLabel") as Text;
-        viewSteps = View.findDrawableById("StepsLabel") as Text;
+        viewAuxData = View.findDrawableById("AuxDataLabel") as Text;
         viewDate = View.findDrawableById("DateLabel") as Text;
+        heartEmpty = Application.loadResource(Rez.Drawables.HeartEmpty) as BitmapResource;
+        heartHalf = Application.loadResource(Rez.Drawables.HeartHalf) as BitmapResource;
+        heartFull = Application.loadResource(Rez.Drawables.HeartFull) as BitmapResource;
     }
 
     // Update request. Optimize data use for frequent requests
@@ -87,12 +94,14 @@ class BigLCD_watchfaceView extends WatchUi.WatchFace {
             viewTemp.setText("-");
         }
 
-        // Steps
-        steps = ActivityMonitor.getInfo().steps;
-        viewSteps.setText(steps.toString());
+        updateEnergy();
+//        viewAuxData.setText(energy.toString());
 
         // Call the parent onUpdate function to redraw the layout
         View.onUpdate(dc);
+
+        // Auxaliary data
+        drawEnergy(dc);
 
         // Draw battery level
         batteryLevel = System.getSystemStats().battery; // 0 to 100 (percent)
@@ -121,16 +130,47 @@ class BigLCD_watchfaceView extends WatchUi.WatchFace {
         viewMinute.setText(timeAndDate.min.format("%02d"));
         viewDate.setText(timeAndDate.year.format("%d") + "-" + timeAndDate.month.format("%0d") + "-" + timeAndDate.day.format("%02d"));
 
-        // Steps
-        steps = ActivityMonitor.getInfo().steps;
-        viewSteps.setText(steps.toString());
+        // Auxaliary data
+//        viewAuxData.setText(energy.toString());
 
         // Call the parent onUpdate function to redraw the layout
         View.onUpdate(dc);
 
+        drawEnergy(dc);
+
         // Elements drawn individually, that are not in layout
         drawBatteryLevel(dc);
         drawUnreadNotifications(dc);
+    }
+
+    // Iterator used to get body energy level
+    function getSensorHistoryIterator() {
+        if ((Toybox has :SensorHistory) && (Toybox.SensorHistory has :getBodyBatteryHistory)) {
+            return Toybox.SensorHistory.getBodyBatteryHistory({});
+        }
+        return null;
+    }
+
+    // Update energy level to 'energy' variable
+    function updateEnergy() {
+        var bbIterator = getSensorHistoryIterator();
+        var energyValue = bbIterator.next();
+        energy = energyValue.data;
+    }
+
+    // Draw energy as a row of empty/full hearts
+    function drawEnergy(dc as Dc) {
+        var s = 100 / (2 * ENERGY_HEARTS_NUM + 1);
+
+        for (var i = 0; i < ENERGY_HEARTS_NUM; i++) {
+            if (energy < s + i * 2 * s) {
+                dc.drawBitmap(width * 0.48 + 20 * i, height * 0.2 - 9, heartEmpty);
+            } else if (energy < 2 * s + i * 2 * s) {
+                dc.drawBitmap(width * 0.48 + 20 * i, height * 0.2 - 9, heartHalf);
+            } else {
+                dc.drawBitmap(width * 0.48 + 20 * i, height * 0.2 - 9, heartFull);
+            }
+        }
     }
 
     // Draw battery level. Use batteryLevel and batteryColor object variables

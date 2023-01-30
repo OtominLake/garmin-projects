@@ -3,4 +3,7 @@
     <drawable-list id="Background">
         <shape type="rectangle" x="0" y="0" width="fill" height="fill" color="Graphics.COLOR_WHITE"/>
     </drawable-list>
+    <bitmap id="HeartEmpty" filename="heart_empty.png" />
+    <bitmap id="HeartHalf" filename="heart_half.png" />
+    <bitmap id="HeartFull" filename="heart_full.png" />
 </drawables>
