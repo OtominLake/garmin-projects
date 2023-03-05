@@ -29,6 +29,11 @@ class FullMinuteTrigger {
     function satisfy() as Void {
         lastMinute = System.getClockTime().min;
     }
+
+    // force next trigger to be true
+    function force() as Void {
+        lastMinute = -1;
+    }
 }
 
 class BigLCD_watchfaceView extends WatchUi.WatchFace {
@@ -65,6 +70,12 @@ class BigLCD_watchfaceView extends WatchUi.WatchFace {
         heartEmpty = Application.loadResource(Rez.Drawables.HeartEmpty) as BitmapResource;
         heartHalf = Application.loadResource(Rez.Drawables.HeartHalf) as BitmapResource;
         heartFull = Application.loadResource(Rez.Drawables.HeartFull) as BitmapResource;
+
+        // sometimes after long time of suspension onLayout is not called but onShow is.
+        // in that cases closest onUpdate must update the watch face
+        // hence each onShow must force triggers to trigger next call
+        fullUpdateTrigger.force();
+        timeTrigger.force();
     }
 
     // Update request. Optimize data use for frequent requests
@@ -86,12 +97,16 @@ class BigLCD_watchfaceView extends WatchUi.WatchFace {
         viewDate.setText(timeAndDate.year.format("%d") + "-" + timeAndDate.month.format("%0d") + "-" + timeAndDate.day.format("%02d"));
 
         // Weather
-        var cond = Weather.getCurrentConditions();
-        if (cond != null) {
-            viewTemp.setText(cond.temperature.format("%d") + "C");
-        } else
-        {
-            viewTemp.setText("-");
+        try {
+            var cond = Weather.getCurrentConditions();
+            if (cond != null) {
+                viewTemp.setText(cond.temperature.format("%d") + "C");
+            } else
+            {
+                viewTemp.setText("-");
+            }
+        } catch (e) {
+            viewTemp.setText("err");
         }
 
         updateEnergy();
