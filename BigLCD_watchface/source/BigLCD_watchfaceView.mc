@@ -39,14 +39,13 @@ class FullMinuteTrigger {
 class BigLCD_watchfaceView extends WatchUi.WatchFace {
     var viewHour, viewMinute, viewTemp, viewAuxData, viewDate;
     var width, height;
-    var timeTrigger, fullUpdateTrigger;
+    var fullUpdateTrigger;
     var batteryLevel, batteryColor;
     var steps = 0, energy = 100;
     var heartEmpty, heartHalf, heartFull;
 
 
     function initialize() {
-        timeTrigger = new FullMinuteTrigger(1);
         fullUpdateTrigger = new FullMinuteTrigger(5);
         WatchFace.initialize();
     }
@@ -75,15 +74,13 @@ class BigLCD_watchfaceView extends WatchUi.WatchFace {
         // in that cases closest onUpdate must update the watch face
         // hence each onShow must force triggers to trigger next call
         fullUpdateTrigger.force();
-        timeTrigger.force();
     }
 
     // Update request. Optimize data use for frequent requests
     function onUpdate(dc as Dc) as Void {
         if (fullUpdateTrigger.trigger()) {
-            timeTrigger.satisfy(); // do not call time trigger after 1 second from this
             fullUpdate(dc);
-        } else if (timeTrigger.trigger()) {
+        } else {
             timeUpdate(dc);
         }
     }
